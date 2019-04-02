@@ -4,8 +4,8 @@ public class Reimbursement {
 	
 	private int reimb_id;
 	private int reimb_amount;
-	private int reimb_submitted;
-	private int reimb_resolved;
+	private String reimb_submitted;
+	private String reimb_resolved;
 	private String reimb_description;
 	private int ERS_Users_id;
 	private int resolver;
@@ -16,7 +16,7 @@ public class Reimbursement {
 		super();
 	}
 
-	public Reimbursement(int reimb_id, int reimb_amount, int reimb_submitted, int reimb_resolved,
+	public Reimbursement(int reimb_id, int reimb_amount, String reimb_submitted, String reimb_resolved,
 			String reimb_description, int eRS_Users_id, int resolver, int status, int type) {
 		super();
 		this.reimb_id = reimb_id;
@@ -46,19 +46,19 @@ public class Reimbursement {
 		this.reimb_amount = reimb_amount;
 	}
 
-	public int getReimb_submitted() {
+	public String getReimb_submitted() {
 		return reimb_submitted;
 	}
 
-	public void setReimb_submitted(int reimb_submitted) {
+	public void setReimb_submitted(String reimb_submitted) {
 		this.reimb_submitted = reimb_submitted;
 	}
 
-	public int getReimb_resolved() {
+	public String getReimb_resolved() {
 		return reimb_resolved;
 	}
 
-	public void setReimb_resolved(int reimb_resolved) {
+	public void setReimb_resolved(String reimb_resolved) {
 		this.reimb_resolved = reimb_resolved;
 	}
 

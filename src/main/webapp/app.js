@@ -44,11 +44,15 @@ function loadLoginView(){
 }
 //load reimb submit
 function loadReimbSubmitView(){
-	var xhr = new HttpRequest();
+	var xhr = new XMLHttpRequest();
 	xhr.onreadystatechange = function(){
 		if(xhr.readyState == 4 && xhr.status == 200){
 			console.log('Moving to submit reimb page');
-			$('view').html(xhr.responseText);
+			$('#view').html(xhr.responseText);
+			$(document).ready( function () {
+			    $('#table_id').DataTable();
+			} );
+			$('#test').on('click', checkReimb);
 			
 		}
 	}
@@ -102,7 +106,20 @@ function loginUser(){
 		$('#error_message').html("<p class = 'text-warning'>Please enter a username and password!</p>");
 	}
 }
-//submit reimbursement
+//===get reimb===
+function checkReimb(){
+	var xhr = new XMLHttpRequest();
+	xhr.onreadystatechange = function(){
+		if(xhr.readyState == 4 && xhr.status == 200){
+			console.log("GOT CHECKREIMB RESP");
+			$('#view').html(xhr.responseText);
+		}
+	}
+	xhr.open("GET", "SubmitReimb");
+	xhr.send();
+	console.log("sent a req to submitSevlet");
+}
+//===submit reimbursement===
 function submitReimb(){
 	var amount = $('#amount').val();
 	var submitted = $('#date').val();	//should make this a trigger
@@ -133,3 +150,4 @@ function submitReimb(){
 	}
 	else console.log('Please fill out all forms');
 }
+
