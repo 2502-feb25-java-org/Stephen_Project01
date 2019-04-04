@@ -24,7 +24,7 @@ public class Reimbursement {
 		this.reimb_submitted = reimb_submitted;
 		this.reimb_resolved = reimb_resolved;
 		this.reimb_description = reimb_description;
-		ERS_Users_id = eRS_Users_id;
+		this.ERS_Users_id = eRS_Users_id;
 		this.resolver = resolver;
 		this.status = status;
 		this.type = type;

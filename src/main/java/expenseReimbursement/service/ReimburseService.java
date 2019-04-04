@@ -10,12 +10,17 @@ import expenseReimbursement.model.Reimbursement;
 
 public class ReimburseService {
 
-	Logger log = Logger.getLogger(ReimburseService.class);
+	private static Logger log = Logger.getLogger(ReimburseService.class);
 	static ReimbDAO dao = new ReimbDAO();
 	
 	public List<Reimbursement> getReimbursements(){
-		List<Reimbursement> r = dao.getReimbursement();
-		
+		List<Reimbursement> r = dao.getReimbursements();
+		log.info(r);
+		return r;
+	}
+	public Reimbursement getSingleReimb() {
+		Reimbursement r = dao.getReimb();
+		log.info(r);
 		return r;
 	}
 }

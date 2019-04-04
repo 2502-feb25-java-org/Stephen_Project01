@@ -27,7 +27,7 @@ public class LogInServlet extends HttpServlet {
     static UserService service = new UserService();
         
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		log.info("test");
+		log.info("doGet Method called!");
 		HttpSession session = request.getSession();
 		if(session.getAttribute("user") != null) {	//user is logged in, redirect.
 			log.info("user is logged in!");
