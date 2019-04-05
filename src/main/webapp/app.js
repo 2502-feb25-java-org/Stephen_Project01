@@ -44,6 +44,9 @@ function loadLoginView() {
 		if (xhr.readyState == 4 && xhr.status == 200) {
 			console.log("MOVING TO LOGIN PAGE");
 			$('#view').html(xhr.responseText);
+			if(user != null){
+				$('#username_nav').html(user.username);
+			}
 			$('#password').on('keydown', function(e) {
 				if (e.which == 13) {
 					loginUser();
@@ -65,6 +68,9 @@ function loadReimbSubmitView() {
 		if (xhr.readyState == 4 && xhr.status == 200) {
 			console.log('Moving to submit reimb page');
 			$('#view').html(xhr.responseText);
+			if(user != null){
+				$('#username_nav').html(user.username);
+			}
 			$('#submitReimb_btn').off('click');
 			$('#submitReimb_btn').on('click', submitReimb);
 			checkReimb();
@@ -114,7 +120,7 @@ function loginUser() {
 					
 					else if(loggedUser.id == 2){
 					console.log('Success! NORMAL USER: TO SUBMITREIMB');
-					checkReimb();
+					loadReimbSubmitView();
 					}
 				}
 			}
@@ -136,14 +142,23 @@ function adminReimbView(){
 		if(xhr.readyState == 4 && xhr.status == 200){
 			console.log("RECIEVED ADMIN VIEW RESP");
 			$('#view').html(xhr.responseText);
+			if(user != null){
+				$('#username_nav').html(user.username);
+			}
+			
 			getAllReimb();
+
+			$('#apprv_btn').off('click');
+			$('#deny_btn').off('click');
+			$('#apprv_btn').on('click', approveReimb);
+			$('#deny_btn').on('click', denyReimb);
 		}
 	}
 	xhr.open("GET", "AdminReimb.view");
 	xhr.send();
 	console.log("SENT REQ FOR ADMINREIMB");
 }
-// ===See User's reimb===
+// ===Get User's reimb===
 function checkReimb() {
 	var xhr = new XMLHttpRequest();
 	xhr.onreadystatechange = function() {
@@ -235,4 +250,49 @@ function submitReimb() {
 		xhr.send(JSON.stringify(reimbursement));
 	} else
 		console.log('Please fill out all forms');
+}
+//==Approve Reimb===
+function approveReimb() {
+	console.log('CREATING TICKET');
+	var reimburse_id = $('#reimb_id_input_1').val();
+	console.log("Approve Reimb#: " + reimburse_id);
+	
+	var reimbTicket = {
+			decision : 1,
+			id: reimburse_id,
+		}; 
+	console.log("created ReimbTicket");
+	var xhr = new XMLHttpRequest();
+	xhr.onreadystatechange = function() {
+		if (xhr.readyState == 4 && xhr.status == 200) {
+			console.log("APPROVAL SUBMITTED");
+		}
+	}
+
+	xhr.open("POST", "AdminReimb");
+	xhr.setRequestHeader("Content-type", "application/json");
+	xhr.send(JSON.stringify(reimbTicket));
+
+}
+//==Deny Reimb==
+function denyReimb() {
+	console.log('CREATING TICKET');
+	var reimburse_id = $('#reimb_id_input_0').val();
+	console.log("DENY Reimb#: " + reimburse_id);
+	
+	var reimbTicket = {
+			decision : 0,
+			reimb_id: reimburse_id,
+		}; 
+	console.log("created ReimbTicket FOR DENIAL");
+	var xhr = new XMLHttpRequest();
+	xhr.onreadystatechange = function() {
+		if (xhr.readyState == 4 && xhr.status == 200) {
+			console.log("DENIAL SUBMITTED");
+		}
+	}
+	xhr.open("POST", "AdminReimb");
+	xhr.setRequestHeader("Content-type", "application/json");
+	xhr.send(JSON.stringify(reimbTicket));
+
 }

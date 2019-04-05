@@ -28,4 +28,10 @@ public class ReimburseService {
 		dao.createReimb(value, desc, typeId, id);
 		log.info("ASKED DAO TO CREATE REIMB");
 	}
+	public void approve(int id, int userId) {
+		dao.approve(id, userId);
+	}
+	public void deny(int id, int userId) {
+		dao.deny(id, userId);
+	}
 }

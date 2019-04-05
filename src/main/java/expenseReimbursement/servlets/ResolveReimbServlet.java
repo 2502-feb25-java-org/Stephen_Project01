@@ -18,6 +18,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import expenseReimbursement.model.Reimbursement;
 import expenseReimbursement.model.User;
 import expenseReimbursement.service.ReimburseService;
+import expenseReimbursement.model.ReimbTicket;
 
 @WebServlet("/AdminReimb")
 public class ResolveReimbServlet extends HttpServlet{
@@ -28,7 +29,7 @@ public class ResolveReimbServlet extends HttpServlet{
 	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		log.info("Admin Servlet Arrived");
+		log.info("Admin Servlet doGet");
 		ObjectMapper mapper = new ObjectMapper();
 		String reimbString = "";
 		
@@ -39,6 +40,24 @@ public class ResolveReimbServlet extends HttpServlet{
 		PrintWriter writer = resp.getWriter();
 		resp.setContentType("application/json");
 		writer.write(reimbString);
+	}
+	@Override
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
+		log.info("Admin Servlet doPost");
+		ObjectMapper mapper = new ObjectMapper();
+		HttpSession session = req.getSession();
+		User u = (User) session.getAttribute("user");
+
+		
+		ReimbTicket ticket = mapper.readValue(req.getInputStream(), ReimbTicket.class);
+		
+		if(ticket.getDecision() == 1) {
+			service.approve(ticket.getId(), u.getId());
+		}
+		else {
+			service.deny(ticket.getId(), u.getId());
+		}
 	}
 	
 }

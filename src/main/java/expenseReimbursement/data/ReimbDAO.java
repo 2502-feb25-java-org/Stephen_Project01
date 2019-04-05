@@ -94,4 +94,39 @@ public class ReimbDAO {
 			e.printStackTrace();
 		}
 	}
+	
+	public void approve(int id, int userId) {
+		try(Connection conn = ConnectionFactory.getInstance().getConnection()){
+			String query = "update reimbursement\r\n" + 
+					"set reimb_resolved = CURRENT_TIMESTAMP,\r\n" + 
+					"reimb_status = ?,\r\n" + 
+					"reimb_resolver = ?\r\n" + 
+					"where reimb_id = ?";
+			PreparedStatement s = conn.prepareStatement(query);
+			s.setInt(1, 2);
+			s.setInt(2, userId);
+			s.setInt(3, id);
+			s.executeQuery();
+		}
+		catch(SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	public void deny(int id, int userId) {
+		try(Connection conn = ConnectionFactory.getInstance().getConnection()){
+			String query = "update reimbursement\r\n" + 
+					"set reimb_resolved = CURRENT_TIMESTAMP,\r\n" + 
+					"reimb_status = ?,\r\n" + 
+					"reimb_resolver = ?\r\n" + 
+					"where reimb_id = ?";
+			PreparedStatement s = conn.prepareStatement(query);
+			s.setInt(1, 3);
+			s.setInt(2, userId);
+			s.setInt(3, id);
+			s.executeQuery();
+		}
+		catch(SQLException e) {
+			e.printStackTrace();
+		}
+	}
 }
