@@ -282,7 +282,7 @@ function denyReimb() {
 	
 	var reimbTicket = {
 			decision : 0,
-			reimb_id: reimburse_id,
+			id: reimburse_id,
 		}; 
 	console.log("created ReimbTicket FOR DENIAL");
 	var xhr = new XMLHttpRequest();
