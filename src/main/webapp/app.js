@@ -171,11 +171,9 @@ function submitReimb() {
 			if (xhr.readyState = 4 && xhr.status == 200) {
 				console.log('SUBMITTED');
 
-			} else {
-				console.log('SUBMISSION FAILED');
 			}
 		}
-		xhr.open("POST", "submit");
+		xhr.open("POST", "SubmitReimb");
 		xhr.setRequestHeader("Content-type", "application/json");
 		xhr.send(JSON.stringify(reimbursement));
 	} else

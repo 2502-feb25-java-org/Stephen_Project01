@@ -24,4 +24,8 @@ public class ReimburseService {
 		log.info(r);
 		return r;
 	}
+	public void createReimb(int value, String desc, int typeId, int id) {
+		dao.createReimb(value, desc, typeId, id);
+		log.info("ASKED DAO TO CREATE REIMB");
+	}
 }

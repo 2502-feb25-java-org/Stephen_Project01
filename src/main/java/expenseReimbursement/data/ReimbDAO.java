@@ -48,7 +48,6 @@ public class ReimbDAO {
 		return reimbursement;
 	}
 
-	// try getting a single reimbursement
 	public Reimbursement getAllReimb() {
 		Reimbursement r = null;
 		try (Connection conn = ConnectionFactory.getInstance().getConnection()) {
@@ -76,7 +75,20 @@ public class ReimbDAO {
 		return r;
 	}
 
-	public void addReimb() {
-		
+	public void createReimb(int value, String desc, int type, int id) {
+		try(Connection conn = ConnectionFactory.getInstance().getConnection()){
+			String query = "insert into reimbursement(reimb_amount, reimb_submitted, reimb_description, reimb_type, reimb_status, ERS_users_id)\r\n" + 
+					"values(?, current_timestamp, ?, ?, '1',?)";
+			PreparedStatement statement = conn.prepareStatement(query);
+			statement.setInt(1, id);
+			statement.setString(2, desc);
+			statement.setInt(3, type);
+			statement.setInt(4, id);
+			statement.executeQuery();
+			log.info("Executed Query");
+			
+		}catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 }

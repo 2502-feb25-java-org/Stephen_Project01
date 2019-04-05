@@ -46,4 +46,40 @@ public class SubmitReimbServlet extends HttpServlet{
 		writer.write(reimbString);
 		
 	}
+	@Override
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		log.info("DO POST SUBMIT SERVLET");
+		
+		HttpSession session = req.getSession();
+		User user = (User) session.getAttribute("user");
+		log.info("User is: " + user);
+
+		ObjectMapper mapper = new ObjectMapper();
+		Reimbursement gotReimb = mapper.readValue(req.getInputStream(), Reimbursement.class);
+		log.info("The Reimb: "+ gotReimb.toString());
+		int value = gotReimb.getReimb_amount();
+		String desc = gotReimb.getReimb_description();
+		String type = gotReimb.getType();
+		int id = user.getId();
+		int typeId;
+		if(type == "lodging") {
+			typeId = 1;	
+		}
+		else if(type == "food") {
+			typeId = 2;
+		}
+		else if(type == "travel") {
+			typeId = 3;
+		}
+		else if(type == "certification") {
+			typeId = 4;
+		}
+		else if(type == "Medical"){
+			typeId = 5;
+		}
+		else {typeId = 1;}
+		
+		
+		service.createReimb(value, desc, typeId, id);
+	}
 }
