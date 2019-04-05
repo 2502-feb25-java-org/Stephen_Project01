@@ -31,8 +31,9 @@ public class UserDAO {
 			ResultSet rs = statement.executeQuery(query);
 
 			while (rs.next()) {
-				User temp = new User(rs.getInt(1), rs.getString("username"), rs.getString("password"),
-						rs.getString("firstName"), rs.getString("lastName"), rs.getString("email"));
+				User temp = new User(rs.getInt(1), rs.getString("ERS_username"), // These need to be from the DB
+						rs.getString("ERS_password"), rs.getString("user_firstName"), rs.getString("user_lastName"),
+						rs.getString("user_email"), rs.getInt("user_role_id"));
 				users.add(temp);
 			}
 		} catch (SQLException e) {
@@ -54,7 +55,7 @@ public class UserDAO {
 			if (rs.next()) {
 				u = new User(rs.getInt(1), rs.getString("ERS_username"), // These need to be from the DB
 						rs.getString("ERS_password"), rs.getString("user_firstName"), rs.getString("user_lastName"),
-						rs.getString("user_email"));
+						rs.getString("user_email"), rs.getInt("user_role_id"));
 			}
 
 		} catch (SQLException e) {

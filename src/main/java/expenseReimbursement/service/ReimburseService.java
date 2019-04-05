@@ -19,8 +19,8 @@ public class ReimburseService {
 		log.info(r);
 		return r;
 	}
-	public Reimbursement getSingleReimb() {
-		Reimbursement r = dao.getAllReimb();
+	public List<Reimbursement> getAllReimb() {
+		List<Reimbursement> r = dao.getAllReimb();
 		log.info(r);
 		return r;
 	}

@@ -3,6 +3,7 @@ var testTable= [
 	    { reimb_id: 1, reimb_amount: 300, reimb_submitted: "2019-04-02 20:49:15.0", reimb_resolved: "2019-04-02 20:49:15.0", reimb_description: "Hello", ERS_Users_id: 2, resolver: 4, status: 2, type: 3 }
 	];
 var reimbList;
+var user;
 window.onload = function() {
 	
 	console.log("app loading");
@@ -15,6 +16,10 @@ function loadLandingView() {
 		if (xhr.readyState == 4 && xhr.status == 200) {
 			console.log('LOADING RESPONSE RECIEVED');
 			$('#view').html(xhr.responseText);
+			console.log(user);
+			if(user != null){
+				$('#username_nav').html(user.username);
+			}
 			console.log(xhr.responseText);
 			//===Remove Prev. Listeners=== //To prevent duplicates
 			$('#title').off('click');
@@ -84,7 +89,7 @@ function loginUser() {
 	var password = $('#password').val();
 
 	if (validString(username) && validString(password)) {
-		var user = {
+		user = {
 			username : username,
 			password : password
 		};
@@ -93,17 +98,24 @@ function loginUser() {
 		xhr.onreadystatechange = function() {
 			if (xhr.readyState == 4 && xhr.status == 200) {
 				console.log('LOGIN RESPONSE RECIEVED');
-				var user = JSON.parse(xhr.responseText); // get user
+				var loggedUser = JSON.parse(xhr.responseText); // get user
 				console.log(xhr.getAllResponseHeaders());
+				console.log("this is: " +loggedUser.username+"Password: "+ loggedUser.password+ "Id: " + loggedUser.id);
 				if (user == null) { // login fail
 					console.log('LOGIN FAIL');
 					$('#error_message')
 							.html(
 									"Could not log you in, please check your credentials");
 				} else {
-					console.log('Success! bringing to homepage');
-					loadLandingView();
-					// load view;
+					if(loggedUser.id == 1){
+						console.log("WELCOME, ADMIN");
+						adminReimbView();
+					}
+					
+					else if(loggedUser.id == 2){
+					console.log('Success! NORMAL USER: TO SUBMITREIMB');
+					checkReimb();
+					}
 				}
 			}
 		}
@@ -117,7 +129,21 @@ function loginUser() {
 						"<p class = 'text-warning'>Please enter a username and password!</p>");
 	}
 }
-// ===get reimb===
+//==Admin Page==
+function adminReimbView(){
+	var xhr = new XMLHttpRequest();
+	xhr.onreadystatechange = function(){
+		if(xhr.readyState == 4 && xhr.status == 200){
+			console.log("RECIEVED ADMIN VIEW RESP");
+			$('#view').html(xhr.responseText);
+			getAllReimb();
+		}
+	}
+	xhr.open("GET", "AdminReimb.view");
+	xhr.send();
+	console.log("SENT REQ FOR ADMINREIMB");
+}
+// ===See User's reimb===
 function checkReimb() {
 	var xhr = new XMLHttpRequest();
 	xhr.onreadystatechange = function() {
@@ -145,6 +171,37 @@ function checkReimb() {
 		}
 	}
 	xhr.open("GET", "SubmitReimb");
+	xhr.send();
+	console.log("sent a req to submitSevlet");
+}
+//==Admin reimb get==
+function getAllReimb() {
+	var xhr = new XMLHttpRequest();
+	xhr.onreadystatechange = function() {
+		if (xhr.readyState == 4 && xhr.status == 200) {
+			console.log("GOT CHECKREIMB RESP");
+			reimbList = JSON.parse(xhr.responseText);
+			console.log(reimbList);
+			if(reimbList != null){
+			
+			$('#table_id').DataTable({
+				data : reimbList,
+				columns : [ 
+					{data : 'reimb_id'}, 
+					{data : 'reimb_amount'}, 
+					{data : 'reimb_submitted'},
+					{data: 'reimb_resolved'},
+					{data : 'reimb_description'},
+					{data: 'resolver'},
+					{data: 'status'},
+					{data: 'type'},
+					{data: 'ers_Users_id'}		//Case sensitive!!!
+				]
+			});
+			}
+		}
+	}
+	xhr.open("GET", "AdminReimb");
 	xhr.send();
 	console.log("sent a req to submitSevlet");
 }
