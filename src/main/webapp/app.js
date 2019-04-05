@@ -60,7 +60,8 @@ function loadReimbSubmitView() {
 		if (xhr.readyState == 4 && xhr.status == 200) {
 			console.log('Moving to submit reimb page');
 			$('#view').html(xhr.responseText);
-			//$('#test').on('click', checkReimb);
+			$('#submitReimb_btn').off('click');
+			$('#submitReimb_btn').on('click', submitReimb);
 			checkReimb();
 		}
 	}
@@ -149,22 +150,23 @@ function checkReimb() {
 }
 // ===submit reimbursement===
 function submitReimb() {
+	
 	var amount = $('#amount').val();
-	var submitted = $('#date').val(); // should make this a trigger
-	var author = $('#username').val(); // Should also be trigger?
-	var type = $('#reimbType').val(); // need to turn into an id. Maybe make a
-										// dropdown? Do case statements?
-
-	if (validString(reimbAmout) && validString(reimbSubmitted)
-			&& validString(reimbAuthor) && validString(reimbType)) {
+	//var submitted = $('#date').val(); // should make this a trigger
+	//var author = $('#username').val(); // Should also be trigger?
+	var type = $('#reimb_type').val(); // need to turn into an id. Maybe make a
+	var description = $('#description').val();			// dropdown? Do case statements?
+	console.log("This is the submission: " + amount +" "+type+" "+description);
+	
+	if (validString(amount) && validString(description)
+			&& validString(type)) {
 		var reimbursement = {
-			reimbAmount : amount,
-			reimbSubmitted : submitted,
-			reimbAuthor : author,
-			reimbType : type
+			reimb_amount : amount,
+			reimb_description: description,
+			type : type
 		};
 
-		var xhr = new HttpRequest();
+		var xhr = new XMLHttpRequest();
 		xhr.onreadystatechange = function() {
 			if (xhr.readyState = 4 && xhr.status == 200) {
 				console.log('SUBMITTED');

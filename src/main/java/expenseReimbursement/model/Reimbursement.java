@@ -15,6 +15,15 @@ public class Reimbursement {
 	public Reimbursement() {
 		super();
 	}
+	
+
+	public Reimbursement(int reimb_amount, String reimb_description, String type) {
+		super();
+		this.reimb_amount = reimb_amount;
+		this.reimb_description = reimb_description;
+		this.type = type;
+	}
+
 
 	public Reimbursement(int reimb_id, int reimb_amount, String reimb_submitted, String reimb_resolved,
 			String reimb_description, String eRS_Users_id, String resolver, String status, String type) {
