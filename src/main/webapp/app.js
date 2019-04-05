@@ -7,7 +7,6 @@ window.onload = function() {
 	
 	console.log("app loading");
 	loadLandingView();
-	checkReimb();
 }
 // ---Load Landing View---
 function loadLandingView() {
@@ -17,12 +16,16 @@ function loadLandingView() {
 			console.log('LOADING RESPONSE RECIEVED');
 			$('#view').html(xhr.responseText);
 			console.log(xhr.responseText);
+			//===Remove Prev. Listeners=== //To prevent duplicates
+			$('#title').off('click');
+			$('#home').off('click');
+			$('#login').off('click');
+			$('#submitReimb').off('click');
 			// --Add event listeners--
 			$('#title').on('click', loadLandingView);
 			$('#home').on('click', loadLandingView);
 			$('#login').on('click', loadLoginView);
 			$('#submitReimb').on('click', loadReimbSubmitView);
-
 		}
 	}
 	xhr.open("GET", "landing.view");
@@ -41,7 +44,7 @@ function loadLoginView() {
 					loginUser();
 				}
 			});
-
+			$('#submit_btn').off('click');//remove previous if there
 			$('#submit_btn').on('click', loginUser);
 		}
 	}
@@ -51,30 +54,14 @@ function loadLoginView() {
 }
 // load reimb submit
 function loadReimbSubmitView() {
-	// checkReimb();
+	//checkReimb();
 	var xhr = new XMLHttpRequest();
 	xhr.onreadystatechange = function() {
 		if (xhr.readyState == 4 && xhr.status == 200) {
 			console.log('Moving to submit reimb page');
 			$('#view').html(xhr.responseText);
-			$(document).ready(function() {
-				$('#table_id').DataTable({
-					data : reimbList,
-					columns : [ 
-						{data : 'reimb_id'}, 
-						{data : 'reimb_amount'}, 
-						{data : 'reimb_submitted'},
-						{data: 'reimb_resolved'},
-						{data : 'reimb_description'},
-						{data: 'resolver'},
-						{data: 'status'},
-						{data: 'type'},
-						{data: 'ers_Users_id'}//Case sensitive!!!
-					]
-
-				});
-			});
-			$('#test').on('click', checkReimb);
+			//$('#test').on('click', checkReimb);
+			checkReimb();
 		}
 	}
 	xhr.open("GET", "SubmitReimb.view");
@@ -136,6 +123,24 @@ function checkReimb() {
 		if (xhr.readyState == 4 && xhr.status == 200) {
 			console.log("GOT CHECKREIMB RESP");
 			reimbList = JSON.parse(xhr.responseText);
+			console.log(reimbList);
+			if(reimbList != null){
+			
+			$('#table_id').DataTable({
+				data : reimbList,
+				columns : [ 
+					{data : 'reimb_id'}, 
+					{data : 'reimb_amount'}, 
+					{data : 'reimb_submitted'},
+					{data: 'reimb_resolved'},
+					{data : 'reimb_description'},
+					{data: 'resolver'},
+					{data: 'status'},
+					{data: 'type'},
+					{data: 'ers_Users_id'}		//Case sensitive!!!
+				]
+			});
+			}
 		}
 	}
 	xhr.open("GET", "SubmitReimb");

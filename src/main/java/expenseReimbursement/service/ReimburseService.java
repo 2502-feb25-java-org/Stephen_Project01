@@ -13,13 +13,14 @@ public class ReimburseService {
 	private static Logger log = Logger.getLogger(ReimburseService.class);
 	static ReimbDAO dao = new ReimbDAO();
 	
-	public List<Reimbursement> getReimbursements(){
-		List<Reimbursement> r = dao.getReimbursements();
+	
+	public List<Reimbursement> getReimbByUserId(int uID){
+		List<Reimbursement> r = dao.getReimbByUserId(uID);
 		log.info(r);
 		return r;
 	}
 	public Reimbursement getSingleReimb() {
-		Reimbursement r = dao.getReimb();
+		Reimbursement r = dao.getAllReimb();
 		log.info(r);
 		return r;
 	}

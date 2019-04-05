@@ -9,12 +9,14 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import expenseReimbursement.model.Reimbursement;
+import expenseReimbursement.model.User;
 import expenseReimbursement.service.ReimburseService;
 
 @WebServlet("/SubmitReimb")
@@ -29,12 +31,14 @@ public class SubmitReimbServlet extends HttpServlet{
 		ObjectMapper mapper = new ObjectMapper();
 		String reimbString = "";
 		
-		List<Reimbursement> reimbursement = service.getReimbursements();
-		//log.info(reimbursement);
-		//log.info(reimbursement.toString());
-		//Reimbursement r = service.getSingleReimb();
+		HttpSession session = req.getSession();					//get Session
+		log.info("This is Session: "+ session.getId());
+		User user = (User) session.getAttribute("user");			//get User
+		log.info("User is: " + user);
+		int userId = user.getId();
+		
+		List<Reimbursement> reimbursement = service.getReimbByUserId(userId);
 		reimbString = mapper.writeValueAsString(reimbursement);
-		//log.info(r);
 		log.info(reimbString);
 		
 		PrintWriter writer = resp.getWriter();

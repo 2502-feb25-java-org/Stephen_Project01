@@ -1,28 +1,50 @@
-<table id="table_id" class="display">
-    <thead>
-        <tr>
-            <th>Reimbursement ID</th>
-            <th>Amount</th>
-            <th>Submission Date</th>
-            <th>Resolution Date</th>
-            <th>Description</th>
-            <th>Resolver ID</th>
-            <th>Status ID</th>
-            <th>Type ID</th>
-            <th>Author ID</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td>Row 1 Data 1</td>
-            <td>Row 1 Data 2</td>
-        </tr>
-        <tr>
-            <td>Row 2 Data 1</td>
-            <td>Row 2 Data 2</td>
-        </tr>
-    </tbody>
-</table>
-<div class = "form-group">
-<input type = "button" id = "test" name = "test" value = "Test"/>
+<div class="container-fluid">
+	<table id="table_id" class="table table-bordered table-hover" style = "width:100%">
+		<thead>
+			<tr>
+				<th>Reimbursement ID</th>
+				<th>Amount</th>
+				<th>Submission Date</th>
+				<th>Resolution Date</th>
+				<th>Description</th>
+				<th>Resolver ID</th>
+				<th>Status ID</th>
+				<th>Type ID</th>
+				<th>Author ID</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td>loading...</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+<div class="form-group ">
+	<div class="form-group">
+		<h3>Request Reimbursement:</h3>
+		<div class = "row justify-content-center">
+			<div class="form-group col-md-1">
+				<label for = "amount">Amount: </label>
+			</div>
+			<div class="form-group col-md-3">
+				<input type ="number" id ="amount" name ="amount" required/>
+			</div>
+		</div>
+		<div class = "row justify-content-center">
+			<div class="form-group col-md-2">
+				<label for = "reimb_type">Reimbursement Type: </label>
+			</div>
+			<div class="form-group col-md-3">
+				<select name="reimb_type" id="reimb_type" required>
+					<option value ="lodging">Lodging</option>
+					<option value ="food">Food</option>
+					<option value ="travel">Travel</option>
+					<option value ="certification">Certification</option>
+					<option value ="medical">Medical</option>
+				</select>
+			</div>
+		</div>
+		
+	</div>
 </div>

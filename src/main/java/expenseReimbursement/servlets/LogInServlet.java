@@ -58,7 +58,9 @@ public class LogInServlet extends HttpServlet {
 			log.info("Login Success!");
 			isUser = mapper.writeValueAsString(logged);
 			HttpSession session = request.getSession();
+			log.info("Created Session " + session.getId() + " at "+ session.getCreationTime());
 			session.setAttribute("user", logged);
+			log.info("This Session's user is: " + session.getAttribute("user"));
 			
 		}
 		PrintWriter writer = response.getWriter();

@@ -7,17 +7,17 @@ public class Reimbursement {
 	private String reimb_submitted;
 	private String reimb_resolved;
 	private String reimb_description;
-	private int ERS_Users_id;
-	private int resolver;
-	private int status;
-	private int type;
+	private String ERS_Users_id;
+	private String resolver;
+	private String status;
+	private String type;
 	
 	public Reimbursement() {
 		super();
 	}
 
 	public Reimbursement(int reimb_id, int reimb_amount, String reimb_submitted, String reimb_resolved,
-			String reimb_description, int eRS_Users_id, int resolver, int status, int type) {
+			String reimb_description, String eRS_Users_id, String resolver, String status, String type) {
 		super();
 		this.reimb_id = reimb_id;
 		this.reimb_amount = reimb_amount;
@@ -70,35 +70,35 @@ public class Reimbursement {
 		this.reimb_description = reimb_description;
 	}
 
-	public int getERS_Users_id() {
+	public String getERS_Users_id() {
 		return ERS_Users_id;
 	}
 
-	public void setERS_Users_id(int eRS_Users_id) {
+	public void setERS_Users_id(String eRS_Users_id) {
 		ERS_Users_id = eRS_Users_id;
 	}
 
-	public int getResolver() {
+	public String getResolver() {
 		return resolver;
 	}
 
-	public void setResolver(int resolver) {
+	public void setResolver(String resolver) {
 		this.resolver = resolver;
 	}
 
-	public int getStatus() {
+	public String getStatus() {
 		return status;
 	}
 
-	public void setStatus(int status) {
+	public void setStatus(String status) {
 		this.status = status;
 	}
 
-	public int getType() {
+	public String getType() {
 		return type;
 	}
 
-	public void setType(int type) {
+	public void setType(String type) {
 		this.type = type;
 	}
 
